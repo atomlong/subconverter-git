@@ -2,7 +2,7 @@
 
 pkgname=subconverter-git
 pkgver=0.7.1.r8.g3fe9725
-pkgrel=1
+pkgrel=2
 pkgdesc='Utility to convert between various subscription format'
 url='https://github.com/tindy2013/subconverter'
 arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h' 'aarch64')
@@ -11,19 +11,21 @@ provides=("${pkgname%-git}")
 conflicts=("${pkgname%-git}")
 source=("${pkgname%-git}::git+${url}.git"
         "0001-Explicitly-link-with-libdl.patch"
-		"subconverter.service")
+        "0002-fix-buffer-size.patch"
+        "subconverter.service")
 sha256sums=('SKIP'
             'e0555eb211e1eac2e1dccf64c970d4d5f42952a876b6043628c6ab8b47786e50'
-			'd264ff72eca2668312a70583eecd8e5c7fd674df025f3da4ba11bdf308c8c5b1')
+            'e491b58e2abb317be9dce35974dfd5e6aebb27a3fb3d2fa7667d76c803c2be30'
+            'd264ff72eca2668312a70583eecd8e5c7fd674df025f3da4ba11bdf308c8c5b1')
 depends=('curl'
          'libevent'
          'yaml-cpp')
 makedepends=('cmake'
              'git'
-			 'rapidjson'
-			 'toml11-git'
-			 'quickjspp'
-			 'libcron')
+             'rapidjson'
+             'toml11-git'
+             'quickjspp'
+             'libcron')
 
 pkgver() {
   cd ${pkgname%-git}
@@ -33,6 +35,7 @@ pkgver() {
 prepare() {
   cd ${pkgname%-git}
   git apply "${srcdir}/0001-Explicitly-link-with-libdl.patch"
+  git apply "${srcdir}/0002-fix-buffer-size.patch"
 }
 
 build() {
