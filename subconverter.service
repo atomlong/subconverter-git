@@ -1,0 +1,13 @@
+[Unit]
+Description=Subconverter service
+After=network.target
+
+[Service]
+User=root
+Type=simple
+ExecStart=/usr/bin/subconverter
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

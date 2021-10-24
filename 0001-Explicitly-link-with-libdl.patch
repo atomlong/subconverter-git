@@ -1,0 +1,27 @@
+From 29f9358ea502c1120231857825c059d7d861e1c8 Mon Sep 17 00:00:00 2001
+From: atomlong <atom.long@hotmail.com>
+Date: Sat, 23 Oct 2021 21:24:30 +0800
+Subject: [PATCH] Explicitly link with libdl fix linking error on some systems:
+ /usr/bin/ld: /tmp/ccTsDmjk.ltrans15.ltrans.o: undefined reference to symbol
+ 'dlclose@@GLIBC_2.2.5' /usr/bin/ld: /usr/lib/libdl.so.2: error adding
+ symbols: DSO missing from command line
+
+---
+ CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c07ceb7..37abe7b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -111,6 +111,7 @@ TARGET_LINK_LIBRARIES(subconverter ${QUICKJS_LIBRARIES})
+ FIND_PACKAGE(LibCron REQUIRED)
+ INCLUDE_DIRECTORIES(${LIBCRON_INCLUDE_DIRS})
+ TARGET_LINK_LIBRARIES(subconverter ${LIBCRON_LIBRARIES})
++TARGET_LINK_LIBRARIES(subconverter ${CMAKE_DL_LIBS})
+ 
+ IF(WIN32)
+     TARGET_LINK_LIBRARIES(subconverter wsock32 ws2_32)
+-- 
+2.33.1.windows.1
+
